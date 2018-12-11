@@ -1,0 +1,41 @@
+#This is the code we used
+
+cd Desktop
+git clone https://github.com/alexa/alexa-avs-sample-app.git
+cd ~/Desktop/alexa-avs-sample-app
+nano automated_install.sh #For this step you'll need to put in your Amazon Developer ProductID, ClientID, and ClientSecret, then hit CTRL+X to saave and exit
+cd ~/Desktop/alexa-avs-sample-app
+. automated_install.sh #Once you are asked questions, answer Y or N, your Pi will install extra software, that could take up to thirty minutes or more
+#Before this next step, you'll need to open three different terminals, don't close them. You'll have to redo these steps every time you reboot your Pi
+cd ~/Desktop/alexa-avs-sample-app/samples
+cd companionService && npm start
+#This starts the companion service with Amazon, keep the terminal open. Then open up the second terminal to run the Java app and it will launch a web browser that registers your Pi-powered Echo with the Alexa web service
+cd ~/Desktop/alexa-avs-sample-app/samples
+cd javaclient && mvn exec:exec
+#A window will pop up asking you to authenticate your device. Click Yes. This opens up a browser window. A second pop-up will appear in the Java app asking you to click Ok. Do not click this yet.
+Log into your Amazon account in the browser.
+You’ll see an authentication screen for your device. Click Okay. Your browser will now display “device tokens ready.”
+You can now Click the Ok pop-up in the Java app.Now, you can communicate with Amazon's server, leave the terminal open.
+cd ~/Desktop/alexa-avs-sample-app/samples
+cd wakeWordAgent/src && ./wakeWordAgent -e kitt_ai
+#You can go on and say Alexa and ask a simple question
+alsamixer
+Tap F6 to select a different USB device. Use the arrow keys to select your microphone.
+Use the arrow keys to increase the capture volume.
+When you’re happy with the volume, tap ESC to exit.
+sudo alsactl store
+sudo apt-get install git libao-dev libssl-dev libcrypt-openssl-rsa-perl libio-socket-inet6-perl libwww-perl avahi-utils libmodule-build-perl
+Press Y when prompted and wait for everything to download and install.
+git clone https://github.com/njh/perl-net-sdp.git
+cd perl-net-sdp
+perl Build.PL
+sudo ./Build
+sudo ./Build test
+sudo ./Build install
+CD ..
+git clone https://github.com/hendrikw82/shairport.git
+cd shairport
+make
+./shairport.pl -a AlexaPi
+
+#Now, your new PiLexa should work, have fun
